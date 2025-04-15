@@ -21,11 +21,7 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public Character save(CharactersDto dto) {
-        Character character = new Character();
-        character.setExternalId(dto.getId());
-        character.setName(dto.getName());
-        character.setStatus(dto.getStatus());
-        character.setGender(dto.getGender());
+        Character character = characterMapper.toModel(dto);
         return characterRepository.save(character);
     }
 

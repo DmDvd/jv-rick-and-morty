@@ -5,12 +5,16 @@ import mate.academy.rickandmorty.dto.CharactersDto;
 import mate.academy.rickandmorty.dto.RickAndMortyApiCharacterDto;
 import mate.academy.rickandmorty.model.Character;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(config = MapperConfig.class)
 public interface CharacterMapper {
-    CharactersDto toDto(Character character);
+    Character fromApiDto(RickAndMortyApiCharacterDto apiDto);
+
+    @Mapping(target = "externalId", source = "id")
+    CharactersDto fromApiToDto(RickAndMortyApiCharacterDto apiDto);
 
     Character toModel(CharactersDto responseDto);
 
-    Character fromApiDto(RickAndMortyApiCharacterDto apiDto);
+    CharactersDto toDto(Character character);
 }

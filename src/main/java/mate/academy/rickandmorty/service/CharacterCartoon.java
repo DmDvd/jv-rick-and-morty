@@ -9,12 +9,14 @@ import java.net.http.HttpResponse;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import mate.academy.rickandmorty.dto.CharacterResponseDataDto;
 import mate.academy.rickandmorty.dto.CharactersDto;
 import mate.academy.rickandmorty.dto.RickAndMortyApiCharacterDto;
 import mate.academy.rickandmorty.mapper.CharacterMapper;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Component
 public class CharacterCartoon {
 
@@ -22,11 +24,6 @@ public class CharacterCartoon {
 
     private final ObjectMapper objectMapper;
     private final CharacterMapper characterMapper;
-
-    public CharacterCartoon(ObjectMapper objectMapper, CharacterMapper characterMapper) {
-        this.objectMapper = objectMapper;
-        this.characterMapper = characterMapper;
-    }
 
     public List<CharactersDto> getCharacters() {
         HttpClient httpClient = HttpClient.newHttpClient();
@@ -47,8 +44,7 @@ public class CharacterCartoon {
                     .orElse(Collections.emptyList());
 
             return apiCharacterDtos.stream()
-                    .map(characterMapper::fromApiDto)
-                    .map(characterMapper::toDto)
+                    .map(characterMapper::fromApiToDto)
                     .toList();
 
         } catch (IOException | InterruptedException e) {
